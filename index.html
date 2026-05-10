@@ -1,31 +1,238 @@
-# ZixOS
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZixOS - Microkernel-based Real-Time Operating System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">ZixOS</span>
+                <span class="tagline">Microkernel OS</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#docs">Docs</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle Navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
-Experimental OS kernel project (Zig 0.16, AArch64). Design and roadmap live under [`docs/`](docs/README.md); phased delivery is in [`docs/development-plan.md`](docs/development-plan.md).
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>ZixOS</h1>
+                <p class="subtitle">Microkernel Architecture-based Real-Time Operating System</p>
+                <p class="description">High-performance microkernel designed for embedded systems, supporting ARM Cortex-M / RISC-V architectures, providing deterministic real-time response and capability-based security.</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn btn-primary">Learn More</a>
+                    <a href="https://github.com/zixos" class="btn btn-secondary" target="_blank">GitHub</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="architecture-diagram">
+                    <div class="layer layer-1">User Space</div>
+                    <div class="layer layer-2">Microkernel</div>
+                    <div class="layer layer-3">Hardware Abstraction Layer</div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-## Build
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Core Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">⚡</div>
+                    <h3>Real-Time Response</h3>
+                    <p>Priority-based preemptive scheduling, microsecond-level interrupt response, deterministic task execution.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔒</div>
+                    <h3>Capability Security</h3>
+                    <p>Capability-based access control, principle of least privilege, preventing unauthorized access.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">💬</div>
+                    <h3>IPC Communication</h3>
+                    <p>Efficient inter-process communication supporting synchronous/asynchronous message passing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔧</div>
+                    <h3>Modular Design</h3>
+                    <p>Clear kernel module separation, easy to extend and customize.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🐦</div>
+                    <h3>Lightweight & Efficient</h3>
+                    <p>Minimal memory footprint, suitable for resource-constrained embedded devices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔄</div>
+                    <h3>Cross-Platform</h3>
+                    <p>Supports ARM Cortex-M and RISC-V architectures, easy to port.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-Requires [Zig](https://ziglang.org/) 0.16.x.
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <h2>System Architecture</h2>
+            <div class="arch-grid">
+                <div class="arch-layer">
+                    <h3>User Layer</h3>
+                    <div class="arch-content">
+                        <p>Application processes interact with the kernel via system calls and receive event notifications through IPC.</p>
+                        <ul>
+                            <li>User Applications</li>
+                            <li>Device Drivers</li>
+                            <li>Service Processes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <h3>Microkernel Layer</h3>
+                    <div class="arch-content">
+                        <p>Provides core services including thread management, IPC, capability control, memory management, scheduler, and interrupt handling.</p>
+                        <ul>
+                            <li>Thread / TCB</li>
+                            <li>IPC / Endpoint</li>
+                            <li>Capability / CNode</li>
+                            <li>Memory / Page</li>
+                            <li>Scheduler</li>
+                            <li>IRQ Management</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <h3>Hardware Abstraction Layer</h3>
+                    <div class="arch-content">
+                        <p>Hides hardware differences and provides a unified hardware access interface.</p>
+                        <ul>
+                            <li>CPU / MPU</li>
+                            <li>Interrupt Controller</li>
+                            <li>Timer</li>
+                            <li>Peripheral Drivers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-```sh
-zig build
-```
+    <section id="modules" class="modules">
+        <div class="container">
+            <h2>Core Modules</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Thread Management</h3>
+                    <p>Thread creation, scheduling, state management and context switching. Supports 256 priority levels with priority inheritance protocol.</p>
+                    <code>TCB_Create | TCB_Start | TCB_Suspend | TCB_Resume</code>
+                </div>
+                <div class="module-card">
+                    <h3>IPC Communication</h3>
+                    <p>Endpoint-based message passing mechanism supporting synchronous calls, asynchronous notifications, and non-blocking operations.</p>
+                    <code>IPC_Send | IPC_Recv | IPC_Call | IPC_Reply</code>
+                </div>
+                <div class="module-card">
+                    <h3>Capability System</h3>
+                    <p>CNode-based capability management supporting capability copy, derivation, revocation, and access control.</p>
+                    <code>CNode_Copy | CNode_Mint | CNode_Revoke</code>
+                </div>
+                <div class="module-card">
+                    <h3>Memory Management</h3>
+                    <p>Physical page allocation, virtual memory mapping, and address space management with MPU protection.</p>
+                    <code>Page_Alloc | Page_Map | Page_Unmap</code>
+                </div>
+                <div class="module-card">
+                    <h3>Scheduler</h3>
+                    <p>Fixed-priority preemptive scheduling with Round-Robin at same priority level, supports periodic budget management.</p>
+                    <code>Scheduler_Yield | Scheduler_Tick</code>
+                </div>
+                <div class="module-card">
+                    <h3>Interrupt Management</h3>
+                    <p>IRQ binding, priority management, and interrupt dispatch. Notifies user threads via Notification.</p>
+                    <code>IRQ_Bind | IRQ_Enable | IRQ_Disable</code>
+                </div>
+            </div>
+        </div>
+    </section>
 
-The kernel ELF is installed to `zig-out/bin/zixos-kernel`.
+    <section id="docs" class="docs">
+        <div class="container">
+            <h2>Documentation</h2>
+            <div class="docs-grid">
+                <a href="../docs/architecture.md" class="doc-card">
+                    <h3>Architecture</h3>
+                    <p>System architecture design documentation</p>
+                </a>
+                <a href="../docs/capability_design.md" class="doc-card">
+                    <h3>Capability System Design</h3>
+                    <p>Capability management and access control</p>
+                </a>
+                <a href="../docs/ipc_design.md" class="doc-card">
+                    <h3>IPC Design</h3>
+                    <p>Inter-process communication mechanism</p>
+                </a>
+                <a href="../docs/scheduler_design.md" class="doc-card">
+                    <h3>Scheduler Design</h3>
+                    <p>Thread scheduling strategy</p>
+                </a>
+                <a href="../docs/interrupt_design.md" class="doc-card">
+                    <h3>Interrupt Design</h3>
+                    <p>Interrupt handling mechanism</p>
+                </a>
+                <a href="../docs/memory_design.md" class="doc-card">
+                    <h3>Memory Design</h3>
+                    <p>Memory management solution</p>
+                </a>
+            </div>
+        </div>
+    </section>
 
-## Run (QEMU virt)
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo">ZixOS</span>
+                    <p>An Microkernel Architecture-based Real-Time Operating System</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#architecture">Architecture</a></li>
+                        <li><a href="#modules">Modules</a></li>
+                        <li><a href="#docs">Docs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: contact@zixos.io</p>
+                    <p>GitHub: github.com/zixos</p>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2026 ZixOS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-Requires `qemu-system-aarch64` on your PATH.
-
-```sh
-zig build qemu
-```
-
-At the `zixos>` prompt, type **`quit`**, **`exit`**, or **`q`** and press Enter to power off via **PSCI `SYSTEM_OFF`** (QEMU exits). On an **empty** prompt you can press **Ctrl+D** for the same effect.
-
-**M1** (capabilities / Untyped Retype / CNode / TCB smoke test): enter **`m1`** once per boot (lazy bootstraps the initial CSpace); UART prints pass/fail lines.
-
-Equivalent manual invocation:
-
-```sh
-qemu-system-aarch64 -M virt -cpu cortex-a53 -nographic -kernel zig-out/bin/zixos-kernel
-```
+    <script src="script.js"></script>
+</body>
+</html>
