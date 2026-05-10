@@ -1,0 +1,31 @@
+# ZixOS
+
+Experimental OS kernel project (Zig 0.16, AArch64). Design and roadmap live under [`docs/`](docs/README.md); phased delivery is in [`docs/development-plan.md`](docs/development-plan.md).
+
+## Build
+
+Requires [Zig](https://ziglang.org/) 0.16.x.
+
+```sh
+zig build
+```
+
+The kernel ELF is installed to `zig-out/bin/zixos-kernel`.
+
+## Run (QEMU virt)
+
+Requires `qemu-system-aarch64` on your PATH.
+
+```sh
+zig build qemu
+```
+
+At the `zixos>` prompt, type **`quit`**, **`exit`**, or **`q`** and press Enter to power off via **PSCI `SYSTEM_OFF`** (QEMU exits). On an **empty** prompt you can press **Ctrl+D** for the same effect.
+
+**M1** (capabilities / Untyped Retype / CNode / TCB smoke test): enter **`m1`** once per boot (lazy bootstraps the initial CSpace); UART prints pass/fail lines.
+
+Equivalent manual invocation:
+
+```sh
+qemu-system-aarch64 -M virt -cpu cortex-a53 -nographic -kernel zig-out/bin/zixos-kernel
+```
